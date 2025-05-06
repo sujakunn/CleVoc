@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CleVoc - Revolusi Pendidikan Vokasional</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #06b6d4;
+      --secondary: #3b82f6;
+      --dark: #0f172a;
+      --light: #f8fafc;
+    }
+    /* Tambahkan di bagian style */
+.dark-mode {
+    background: #0a0a0a;
+    color: #f8fafc;
+}
+
+.dark-mode .glass {
+    background: rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-nav {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .btn-glow {
+    background: linear-gradient(90deg, #0891b2, #2563eb);
+}
+
+.badge {
+    @apply px-3 py-1 bg-cyan-400/10 text-cyan-400 text-xs rounded-full;
+}
+
+.step-number {
+    @apply w-8 h-8 bg-cyan-400/20 text-cyan-400 rounded-full 
+           flex items-center justify-center mt-4 mx-auto;
+}
+
+.aspect-video { aspect-ratio: 16/9; }
+
+/* Tambahkan dalam tag style */
+.chat-message {
+  @apply flex;
+}
+
+.chat-message.user {
+  @apply justify-end;
+}
+
+.chat-message.bot {
+  @apply justify-start;
+}
+
+.message-content {
+  @apply max-w-[70%] rounded-lg p-3 text-sm;
+}
+
+.chat-message.user .message-content {
+  @apply bg-cyan-400 text-white;
+}
+
+.chat-message.bot .message-content {
+  @apply bg-gray-700 text-gray-300;
+}
+
+.dot {
+  @apply w-2 h-2 bg-gray-400 rounded-full;
+  }
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+    body {
+      background: linear-gradient(to right, var(--dark), #1e293b, #334155);
+      color: var(--light);
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-glow {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .section-padding {
+      padding: 8rem 0;
+    }
+
+    .hover-scale {
+      transition: transform 0.3s ease;
+    }
+
+    .hover-scale:hover {
+      transform: scale(1.02);
+    }
+
+/* Tambahkan style untuk section yang aktif */
+section:target {
+  animation: highlight 1.5s ease;
+}
+
+@keyframes highlight {
+  0% { background-color: rgba(6, 182, 212, 0.1); }
+  100% { background-color: transparent; }
+}
+
+/* Tambahkan style khusus dashboard */
+.dashboard-card {
+    @apply glass p-4 rounded-xl hover-scale transition-all;
+}
+
+.talent-table {
+    @apply w-full text-sm;
+    
+    th, td {
+        @apply p-3 text-left border-b border-gray-700;
+    }
+    
+    th {
+        @apply font-bold text-cyan-400;
+    }
+    
+    tr:hover {
+        @apply bg-cyan-400/10;
+    }
+}
+
+.skill-meter {
+    @apply w-full h-2 bg-gray-700 rounded-full overflow-hidden;
+    
+    .skill-progress {
+        @apply h-full bg-cyan-400 transition-all;
+    }
+}
+
+.view-btn {
+    @apply px-3 py-1 rounded-lg bg-cyan-400/10 text-cyan-400 
+           hover:bg-cyan-400/20 transition;
+}
+
+.integration-logo {
+    @apply w-16 h-16 flex items-center justify-center glass rounded-xl 
+           text-3xl hover:text-cyan-400 hover-scale;
+}
+
+.radial-progress {
+    @apply text-cyan-400 border-4 border-cyan-400/20;
+}
+
+
+/* Tambahkan di bagian style */
+.badge {
+    @apply px-3 py-1 bg-cyan-400/10 text-cyan-400 text-xs rounded-full;
+}
+
+.step-number {
+    @apply w-8 h-8 bg-cyan-400/20 text-cyan-400 rounded-full 
+           flex items-center justify-center mt-4 mx-auto;
+}
+
+.aspect-video { aspect-ratio: 16/9; }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="fixed w-full z-50 glass">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ44oUruhuy9xQh6TYyxGGZY_jOaz2eszW6vg&s" alt="Logo" class="w-10 h-10 rounded-full">
+        <span class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          CleVoc
+        </span>
+      </div>
+      
+      <div class="flex items-center space-x-6">
+        <a href="#tentang" class="text-gray-300 hover:text-cyan-400 transition">Tentang</a>
+        <a href="#fitur" class="text-gray-300 hover:text-cyan-400 transition">Fitur</a>
+        <a href="#testimoni" class="text-gray-300 hover:text-cyan-400 transition">Testimoni</a>
+        <div class="flex space-x-4">
+          <button onclick="scrollToLogin()" class="btn-glow px-4 py-2 rounded-lg">Masuk</button>
+          <button class="text-gray-300 hover:text-cyan-400 transition" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Section Tentang -->
+  <section id="tentang" class="section-padding">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6" data-aos="fade-right">
+          <h1 class="text-5xl font-bold leading-tight">
+            <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              Revolusi Pendidikan Vokasional
+            </span><br>
+            dengan Kecerdasan Buatan
+          </h1>
+          <p class="text-gray-300 text-lg">
+            CleVoc menghadirkan platform pembelajaran adaptif berbasis AI untuk menyiapkan lulusan SMK siap kerja di era Society 5.0
+          </p>
+          <div class="flex space-x-4">
+            <button class="btn-glow px-6 py-3 rounded-lg font-semibold">Mulai Sekarang</button>
+            <button class="border border-cyan-400 text-cyan-400 px-6 py-3 rounded-lg hover:bg-cyan-400/10 transition">
+              Pelajari Lebih
+            </button>
+          </div>
+        </div>
+        <div class="relative" data-aos="fade-left">
+          <div class="glass rounded-2xl p-1 hover-scale">
+            <img src="https://www.syniumsoftware.com/wp-content/images/logoist/overview_vectorai_gallery/21.png" 
+                 alt="CleVoc"
+                 class="rounded-2xl w-full h-auto">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Fitur -->
+  <section id="fitur" class="section-padding bg-dark/50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl font-bold mb-4">Fitur Unggulan</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto">Platform pembelajaran vokasional masa depan dengan integrasi teknologi terkini</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Fitur 1 -->
+        <div class="glass p-8 rounded-2xl hover-scale" data-aos="zoom-in">
+          <div class="text-cyan-400 text-4xl mb-4">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">AI Profiling System</h3>
+          <p class="text-gray-300 mb-6">Sistem analisis kemampuan siswa dan rekomendasi pembelajaran personal</p>
+          <button class="btn-glow px-4 py-2 rounded-lg">Pelajari →</button>
+        </div>
+
+        <!-- Fitur 2 -->
+        <div class="glass p-8 rounded-2xl hover-scale" data-aos="zoom-in">
+          <div class="text-cyan-400 text-4xl mb-4">
+            <i class="fas fa-vr-cardboard"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Work Simulation</h3>
+          <p class="text-gray-300 mb-6">Simulasi lingkungan kerja nyata dengan teknologi AR/VR</p>
+          <button class="btn-glow px-4 py-2 rounded-lg">Pelajari →</button>
+        </div>
+
+        <!-- Fitur 3 -->
+        <div class="glass p-8 rounded-2xl hover-scale" data-aos="zoom-in">
+          <div class="text-cyan-400 text-4xl mb-4">
+            <i class="fa fa-link"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Smart Dashboard</h3>
+          <p class="text-gray-300 mb-6">Jaringan langsung dengan mitra industri terkemuka</p>
+          <button class="btn-glow px-4 py-2 rounded-lg">Pelajari →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Testimoni -->
+  <section id="testimoni" class="section-padding">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl font-bold mb-4">Apa Kata Mereka?</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto">Dengarkan pengalaman pengguna CleVoc</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Testimoni 1 -->
+        <div class="glass p-8 rounded-2xl hover-scale" data-aos="fade-right">
+          <div class="flex items-center mb-6">
+            <img src="https://www.syniumsoftware.com/wp-content/images/logoist/overview_vectorai_gallery/2.png" 
+                 alt="User" 
+                 class="w-14 h-14 rounded-full mr-4">
+            <div>
+              <h4 class="font-bold">Budi Santoso</h4>
+              <p class="text-gray-400">Guru SMKN 1 Jakarta</p>
+            </div>
+          </div>
+          <p class="text-gray-300 italic">
+            "CleVoc benar-benar mengubah cara pembelajaran di sekolah kami. Sistem AI-nya membantu siswa memahami materi dengan lebih baik."
+          </p>
+        </div>
+
+        <!-- Testimoni 2 -->
+        <div class="glass p-8 rounded-2xl hover-scale" data-aos="fade-left">
+          <div class="flex items-center mb-6">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvccYA5DkvAiCckGtsRJK3HCwj3jNSPkDQ5w&s" 
+                 alt="User" 
+                 class="w-14 h-14 rounded-full mr-4">
+            <div>
+              <h4 class="font-bold">Sarah Wijaya</h4>
+              <p class="text-gray-400">HR Manager Tech Corp</p>
+            </div>
+          </div>
+          <p class="text-gray-300 italic">
+            "Lulusan yang menggunakan CleVoc memiliki skill yang lebih siap kerja dibandingkan yang lain."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tambahkan di dalam <body> setelah section testimoni -->
+<section id="ai-profiling" class="section-padding bg-gradient-to-br from-cyan-900/20 to-blue-900/20">
+    <div class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <div class="text-center mb-20" data-aos="fade-up">
+            <h2 class="text-4xl font-bold mb-4">AI Profiling System</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto">
+                Sistem analisis kecerdasan buatan yang memetakan kemampuan siswa dan merancang pembelajaran personal
+            </p>
+        </div>
+
+        <!-- Process Flow -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <!-- Step 1 -->
+            <div class="glass p-6 rounded-xl hover-scale" data-aos="zoom-in">
+                <div class="text-cyan-400 text-3xl mb-4">
+                    <i class="fas fa-font-awesome"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Analisis Awal</h3>
+                <p class="text-gray-300 text-sm">
+                    Sistem AI menganalisis kemampuan dasar melalui tes diagnostik interaktif
+                </p>
+                <div class="mt-4 flex items-center text-cyan-400">
+                    <span class="text-sm">01</span>
+                    <div class="flex-1 h-px bg-cyan-400/30 mx-3"></div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="glass p-6 rounded-xl hover-scale" data-aos="zoom-in">
+                <div class="text-cyan-400 text-3xl mb-4">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Pemetaan Kompetensi</h3>
+                <p class="text-gray-300 text-sm">
+                    Membuat peta kompetensi berdasarkan analisis gaya belajar dan minat
+                </p>
+                <div class="mt-4 flex items-center text-cyan-400">
+                    <span class="text-sm">02</span>
+                    <div class="flex-1 h-px bg-cyan-400/30 mx-3"></div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="glass p-6 rounded-xl hover-scale" data-aos="zoom-in">
+                <div class="text-cyan-400 text-3xl mb-4">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Rekomendasi Pembelajaran</h3>
+                <p class="text-gray-300 text-sm">
+                    Menyusun roadmap belajar personal dengan konten adaptif
+                </p>
+                <div class="mt-4 flex items-center text-cyan-400">
+                    <span class="text-sm">03</span>
+                    <div class="flex-1 h-px bg-cyan-400/30 mx-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Details -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Visualisasi -->
+            <div class="glass p-6 rounded-2xl hover-scale" data-aos="fade-right">
+                <div class="relative aspect-video rounded-xl overflow-hidden">
+                    <img src="https://img.freepik.com/premium-photo/3d-bar-chart-3d-bar-chart-illustration-bar-chart-with-depth-threedimensional-bar-graph-3d-recta_980716-64365.jpg?w=740" 
+                         alt="AI Profiling Dashboard" 
+                         class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent"></div>
+                </div>
+            </div>
+
+            <!-- Benefit List -->
+            <div class="space-y-6" data-aos="fade-left">
+                <div class="flex items-start space-x-4">
+                    <div class="text-cyan-400 text-xl mt-1">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Diagnosis Mendalam</h4>
+                        <p class="text-gray-300">
+                            Analisis 12 parameter kompetensi termasuk gaya belajar, kecepatan memahami materi, dan kemampuan problem solving
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="text-cyan-400 text-xl mt-1">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Learning Path Dinamis</h4>
+                        <p class="text-gray-300">
+                            Sistem adaptif yang terus menyesuaikan roadmap belajar berdasarkan perkembangan terkini
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="text-cyan-400 text-xl mt-1">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Koneksi Industri</h4>
+                        <p class="text-gray-300">
+                            Rekomendasi karir berdasarkan kebutuhan industri terkini dan kemampuan siswa
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center mt-20" data-aos="zoom-in">
+            <h3 class="text-2xl font-bold mb-6">Mulai Perjalanan Belajarmu</h3>
+            <div class="flex justify-center space-x-4">
+                <button class="btn-glow px-8 py-3 rounded-lg font-semibold">
+                    Coba Demo Gratis
+                </button>
+                <button class="border border-cyan-400 text-cyan-400 px-8 py-3 rounded-lg hover:bg-cyan-400/10 transition">
+                    Lihat Studi Kasus
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+        
+        <section id="work-simulation" class="section-padding bg-gradient-to-tl from-blue-900/20 to-cyan-900/20">
+    <div class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <div class="text-center mb-20" data-aos="fade-up">
+            <h2 class="text-4xl font-bold mb-4">Real Work Simulation</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto">
+                Pelatihan berbasis skenario nyata industri dengan teknologi imersif dan kolaborasi tim
+            </p>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="grid md:grid-cols-2 gap-12 mb-16">
+            <!-- VR Experience -->
+            <div class="glass p-6 rounded-2xl hover-scale" data-aos="fade-right">
+                <div class="aspect-video rounded-xl overflow-hidden relative">
+                    <img src="https://www.qlausa.com/wp-content/uploads/2023/06/16-Memanfaatkan-Teknologi-AR-dan-VR-untuk-Bisnis-Qlausa-1.jpg" 
+                         alt="VR Training" 
+                         class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <div class="bg-cyan-400/80 text-dark px-4 py-2 rounded-full text-sm">
+                            🔥 Live Demo Available
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-xl font-bold mb-2">VR Training Environment</h3>
+                    <p class="text-gray-300 text-sm">
+                        Simulasi lingkungan kerja nyata dengan teknologi Virtual Reality 360°
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature List -->
+            <div class="space-y-8" data-aos="fade-left">
+                <div class="glass p-6 rounded-xl">
+                    <div class="flex items-start gap-4">
+                        <div class="text-cyan-400 text-2xl">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2">Skenario Industri Aktual</h4>
+                            <p class="text-gray-300 text-sm">
+                                Kasus nyata dari 100+ mitra industri terkemuka
+                            </p>
+                            <div class="mt-3 grid grid-cols-3 gap-2">
+                                <div class="text-center p-2 bg-dark/30 rounded">
+                                    <p class="text-cyan-400 text-sm font-bold">48h</p>
+                                    <p class="text-xs text-gray-300">Duration</p>
+                                </div>
+                                <div class="text-center p-2 bg-dark/30 rounded">
+                                    <p class="text-cyan-400 text-sm font-bold">15+</p>
+                                    <p class="text-xs text-gray-300">Roles</p>
+                                </div>
+                                <div class="text-center p-2 bg-dark/30 rounded">
+                                    <p class="text-cyan-400 text-sm font-bold">98%</p>
+                                    <p class="text-xs text-gray-300">Accuracy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-6 rounded-xl">
+                    <div class="flex items-start gap-4">
+                        <div class="text-cyan-400 text-2xl">
+                            <i class="fas fa-users-gear"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2">Kolaborasi Real-Time</h4>
+                            <p class="text-gray-300 text-sm">
+                                Kerja tim dengan sistem version control dan task management
+                            </p>
+                            <div class="mt-3 flex space-x-2">
+                                <div class="badge">👥 Multiplayer</div>
+                                <div class="badge">⏱️ Real-Time</div>
+                                <div class="badge">📊 Analytics</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow Section -->
+        <div class="grid md:grid-cols-4 gap-6 mb-20">
+            <div class="glass p-6 rounded-xl text-center" data-aos="zoom-in">
+                <div class="text-cyan-400 text-3xl mb-4">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h4 class="font-bold mb-2">Brief Projek</h4>
+                <p class="text-gray-300 text-sm">
+                    Penerimaan kasus dan penjelasan requirements
+                </p>
+                <div class="step-number">1</div>
+            </div>
+            
+            <div class="glass p-6 rounded-xl text-center" data-aos="zoom-in">
+                <div class="text-cyan-400 text-3xl mb-4">
+                    <i class="fa fa-bullhorn"></i>
+                </div>
+                <h4 class="font-bold mb-2">Planning</h4>
+                <p class="text-gray-300 text-sm">
+                    Pembagian tugas dan timeline pengerjaan
+                </p>
+                <div class="step-number">2</div>
+            </div>
+            
+            <div class="glass p-6 rounded-xl text-center" data-aos="zoom-in">
+                <div class="text-cyan-400 text-3xl mb-4">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h4 class="font-bold mb-2">Execution</h4>
+                <p class="text-gray-300 text-sm">
+                    Implementasi solusi dengan tools profesional
+                </p>
+                <div class="step-number">3</div>
+            </div>
+            
+            <div class="glass p-6 rounded-xl text-center" data-aos="zoom-in">
+                <div class="text-cyan-400 text-3xl mb-4">
+                    <i class="fas fa-battery-half"></i>
+                </div>
+                <h4 class="font-bold mb-2">Review</h4>
+                <p class="text-gray-300 text-sm">
+                    Presentasi hasil dan evaluasi oleh AI
+                </p>
+                <div class="step-number">4</div>
+            </div>
+        </div>
+
+        <!-- Interactive Demo -->
+        <div class="glass rounded-2xl overflow-hidden" data-aos="fade-up">
+            <div class="grid md:grid-cols-2 gap-8 p-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Coba Simulasi Gratis</h3>
+                    <p class="text-gray-300 mb-6">
+                        Pilih role dan mulai simulasi 15 menit pertama gratis
+                    </p>
+                    <div class="space-y-4">
+                        <select class="w-full bg-dark/30 rounded-lg p-3 border border-gray-700">
+                            <option>Pilih Role...</option>
+                            <option>Frontend Developer</option>
+                            <option>Network Engineer</option>
+                            <option>3D Designer</option>
+                        </select>
+                        <button class="btn-glow w-full py-3 rounded-lg">
+                            🚀 Mulai Simulasi Sekarang
+                        </button>
+                    </div>
+                </div>
+                <div class="aspect-video bg-dark/30 rounded-xl overflow-hidden">
+                    <div class="h-full flex items-center justify-center text-gray-400">
+                        <i class="fas fa-vr-cardboard text-6xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="smart-dashboard" class="section-padding bg-gradient-to-br from-dark to-blue-900/30">
+    <div class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <div class="text-center mb-20" data-aos="fade-up">
+            <h2 class="text-4xl font-bold mb-4">Smart Dashboard</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto">
+                Platform analitik real-time untuk guru dan akses transparan bagi industri
+            </p>
+        </div>
+
+        <!-- Dual Perspective -->
+        <div class="grid md:grid-cols-2 gap-8 mb-16">
+            <!-- Guru Perspective -->
+            <div class="glass p-6 rounded-2xl" data-aos="fade-right">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-cyan-400 text-3xl">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold">Teacher's View</h3>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="dashboard-card">
+
+                        <h4 class="text-lg font-bold mb-2">📊 Student Progress Matrix</h4>
+                        <div class="aspect-video bg-dark/30 rounded-xl mb-4">
+                            <!-- Tempatkan grafik progress -->
+                            <div class="h-full flex items-center justify-center text-gray-400">
+                                <i class="fas fa-chart-network text-4xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-cyan-400">78% Average Progress</span>
+                            <span class="text-gray-400">Updated 5m ago</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass p-4 rounded-xl text-center">
+                            <div class="text-cyan-400 text-2xl mb-2">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <p class="text-sm font-bold">3 Competency Gaps</p>
+                            <p class="text-xs text-gray-400">Need attention</p>
+                        </div>
+                        
+                        <div class="glass p-4 rounded-xl text-center">
+                            <div class="text-cyan-400 text-2xl mb-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <p class="text-sm font-bold">12 AI Recommendations</p>
+                            <p class="text-xs text-gray-400">Teaching strategies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industry Perspective -->
+            <div class="glass p-6 rounded-2xl" data-aos="fade-left">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-cyan-400 text-3xl">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold">Industry View</h3>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="dashboard-card">
+                        <h4 class="text-lg font-bold mb-2">🔍 Talent Discovery</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full talent-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Jurusan</th>
+                                        <th>Skill Match</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data siswa -->
+                                    <tr>
+                                        <td>Andi Wijaya</td>
+                                        <td>RPL</td>
+                                        <td>
+                                            <div class="skill-meter">
+                                                <div class="skill-progress" style="width: 92%"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="view-btn">👁️ Lihat</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Tambahkan 4-5 baris data -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="glass p-4 rounded-xl">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="font-bold">🚀 Active Collaborations</p>
+                                <p class="text-gray-400 text-sm">23 ongoing projects</p>
+                            </div>
+                            <button class="view-btn">Explore →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Analytics -->
+        <div class="glass p-6 rounded-2xl mb-16" data-aos="zoom-in">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="text-cyan-400 text-3xl">
+                    <i class="fas fa-universal-access"></i>
+                </div>
+                <h3 class="text-2xl font-bold">Cross-Platform Analytics</h3>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="radial-progress mx-auto" style="--value:85; --size:8rem; --thickness:8px;">
+                        <span class="text-cyan-400 font-bold">85%</span>
+                    </div>
+                    <p class="mt-4 font-bold">Curriculum Alignment</p>
+                    <p class="text-sm text-gray-400">With industry needs</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="radial-progress mx-auto" style="--value:92; --size:8rem; --thickness:8px;">
+                        <span class="text-cyan-400 font-bold">92%</span>
+                    </div>
+                    <p class="mt-4 font-bold">Engagement Rate</p>
+                    <p class="text-sm text-gray-400">Student activity</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="radial-progress mx-auto" style="--value:78; --size:8rem; --thickness:8px;">
+                        <span class="text-cyan-400 font-bold">78%</span>
+                    </div>
+                    <p class="mt-4 font-bold">Hiring Match</p>
+                    <p class="text-sm text-gray-400">Successful placements</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration Section -->
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-6" data-aos="fade-right">
+                <h3 class="text-2xl font-bold">🔗 Integrasi Ecosystem</h3>
+                <p class="text-gray-300">
+                    Terhubung dengan sistem enterprise dan platform industri utama:
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <div class="integration-logo">
+                        <i class="fab fa-aws"></i>
+                    </div>
+                    <div class="integration-logo">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="integration-logo">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <!-- Tambahkan lebih banyak logo -->
+                </div>
+                <button class="btn-glow px-6 py-3 rounded-lg">
+                    Lihat Dokumentasi API
+                </button>
+            </div>
+            
+            <div class="glass p-6 rounded-2xl" data-aos="fade-left">
+                <div class="aspect-video bg-dark/30 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-code-branch text-6xl text-cyan-400"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+      <!-- Section Login/Daftar -->
+  <section id="login" class="section-padding">
+  <section class="section-padding">
+    <div class="container mx-auto px-6 max-w-md">
+      <div class="glass p-8 rounded-2xl" data-aos="zoom-in">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold mb-2">Selamat Datang</h2>
+          <p class="text-gray-300">Silakan masuk ke akun Anda</p>
+        </div>
+        
+        <form class="space-y-6">
+          <div>
+            <input type="email" 
+                   placeholder="Alamat Email" 
+                   class="w-full px-4 py-3 bg-dark/20 rounded-lg border border-gray-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50">
+          </div>
+          
+          <div>
+            <input type="password" 
+                   placeholder="Kata Sandi" 
+                   class="w-full px-4 py-3 bg-dark/20 rounded-lg border border-gray-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50">
+          </div>
+          
+          <button type="submit" class="btn-glow w-full py-3 rounded-lg font-semibold">
+                Masuk Sekarang
+            </button>
+          
+          <div class="text-center text-gray-300">
+            Belum punya akun? 
+            <a href="#" class="text-cyan-400 hover:underline">Daftar disini</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+    <!-- Chatbot Container -->
+<div id="chatbot-container" class="fixed bottom-6 right-6 z-50 transition-all duration-300">
+  <div class="glass rounded-2xl shadow-xl w-80 max-h-[80vh] flex flex-col hidden" id="chat-window">
+    <!-- Chat Header -->
+    <div class="flex items-center justify-between p-4 border-b border-gray-700">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 bg-cyan-400 rounded-full flex items-center justify-center">
+          <i class="fas fa-robot text-white"></i>
+        </div>
+        <h3 class="font-semibold">CleVoc Bot</h3>
+      </div>
+      <button onclick="toggleChat()" class="text-gray-400 hover:text-cyan-400">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <!-- Chat Messages -->
+    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4">
+      <div class="chat-message bot">
+        <div class="message-content">
+          Halo! Saya AI Assistant CleVoc. Ada yang bisa saya bantu?
+        </div>
+      </div>
+    </div>
+    
+    <!-- Chat Input -->
+    <div class="p-4 border-t border-gray-700">
+      <div class="flex space-x-2">
+        <input 
+          type="text" 
+          id="user-input" 
+          placeholder="Ketik pesan..." 
+          class="flex-1 bg-dark/20 text-sm rounded-lg px-4 py-2 border border-gray-700 focus:border-cyan-400 focus:outline-none"
+        >
+        <button  onclick="sendMessage()" 
+          class="btn-glow px-4 py-2 rounded-lg flex items-center justify-center"
+        >
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Toggle Button -->
+  <button 
+    onclick="toggleChat()" 
+    class="btn-glow w-12 h-12 rounded-full flex items-center justify-center shadow-lg mt-4"
+    id="chat-toggle"
+  >
+    <i class="fas fa-comment-dots"></i>
+  </button>
+</div>
+
+  <!-- Kode Asli Tetap Dipertahankan Dibawah -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+
+    // Dark Mode Toggle
+// Update fungsi dark mode
+function toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+    
+    // Simpan preferensi di localStorage
+    const isDark = body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    
+    // Update warna navbar
+    const nav = document.querySelector('nav');
+    isDark ? nav.classList.add('dark-nav') : nav.classList.remove('dark-nav');
+}
+
+// Inisialisasi dark mode saat pertama load
+document.addEventListener('DOMContentLoaded', () => {
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    if(isDark) {
+        document.body.classList.add('dark-mode');
+        document.querySelector('nav').classList.add('dark-nav');
+    }
+});
+
+// Fungsi scroll ke login
+function scrollToLogin() {
+    document.getElementById('login').scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+function toggleChat() {
+  const chatWindow = document.getElementById('chat-window');
+  const chatToggle = document.getElementById('chat-toggle');
+  chatWindow.classList.toggle('hidden');
+  chatToggle.classList.toggle('bg-cyan-400');
+}
+
+// Fungsi Kirim Pesan
+function sendMessage() {
+  const userInput = document.getElementById('user-input');
+  const chatMessages = document.getElementById('chat-messages');
+  
+  if (userInput.value.trim() !== '') {
+    // Tambahkan pesan pengguna
+    const userMessage = document.createElement('div');
+    userMessage.className = 'chat-message user';
+    userMessage.innerHTML = `
+      <div class="message-content">
+        ${userInput.value}
+      </div>
+    `;
+    chatMessages.appendChild(userMessage);
+        // Simulasikan loading
+    const loadingMessage = document.createElement('div');
+    loadingMessage.className = 'chat-message bot';
+    loadingMessage.innerHTML = `
+      <div class="message-content">
+        <div class="flex space-x-2 items-center">
+          <div class="dot animate-bounce"></div>
+          <div class="dot animate-bounce delay-100"></div>
+          <div class="dot animate-bounce delay-200"></div>
+        </div>
+      </div>
+    `;
+    chatMessages.appendChild(loadingMessage);
+    
+    // Scroll ke pesan terbaru
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    
+    // Simulasikan respon AI
+    setTimeout(() => {
+      loadingMessage.remove();
+      const botMessage = document.createElement('div');
+      botMessage.className = 'chat-message bot';
+      botMessage.innerHTML = `
+        <div class="message-content">
+          ${generateResponse(userInput.value)}
+        </div>
+      `;
+      chatMessages.appendChild(botMessage);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 1500);
+    
+    userInput.value = '';
+  }
+}
+// Fungsi Generate Response
+function generateResponse(input) {
+  const lowerInput = input.toLowerCase();
+  const responses = {
+    'hello': 'Halo! Ada yang bisa saya bantu?',
+    'tentang': 'CleVoc adalah platform pembelajaran vokasional berbasis AI',
+    'fitur': 'Kami memiliki fitur: AI Profiling, Simulasi Kerja, dan Dashboard Cerdas',
+    'default': 'Maaf, saya belum memahami pertanyaan Anda. Coba tanyakan hal lain.'
+  };
+  
+  return responses[lowerInput] || responses['default'];
+}
+
+    // ... (Kode asli JavaScript tetap dipertahankan)
+  </script>
+   <footer class="glass border-t border-gray-700">
+    <div class="container mx-auto px-6 py-8">
+      <div class="text-center text-gray-300">
+        <p class="mb-2">© 2025 CleVoc. Syuja Rifka Khairyansyah. All rights reserved.</p>
+        <p class="text-sm">Innovating Vocational Education with AI</p>
+      </div>
+    </div>
+     </footer>
+</body>
+</html>
